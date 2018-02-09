@@ -52,8 +52,14 @@ var Field = function (_Base) {
 
         var id = machineIdSync();
         var publicId = id.slice(0, 16);
+        var _cleanOpts = function _cleanOpts(options) {
+            return _extends({}, options, {
+                port: parseInt(options.port),
+                IRIPort: parseInt(options.IRIPort)
+            });
+        };
 
-        var _this = _possibleConstructorReturn(this, (Field.__proto__ || Object.getPrototypeOf(Field)).call(this, _extends({}, DEFAULT_OPTIONS, options, { name: options.name || 'CarrIOTA Field Node #' + publicId
+        var _this = _possibleConstructorReturn(this, (Field.__proto__ || Object.getPrototypeOf(Field)).call(this, _extends({}, DEFAULT_OPTIONS, _cleanOpts(options), { name: options.name || 'CarrIOTA Field Node #' + publicId
         })));
 
         _this.api = new IOTA({ host: 'http://' + _this.opts.IRIHostname, port: _this.opts.IRIPort }).api;
@@ -143,7 +149,7 @@ var Field = function (_Base) {
             // 3. Start updater
             this.updater = setInterval(function () {
                 return _this2.sendUpdates();
-            }, 5000);
+            }, 20000);
 
             return new Promise(function (resolve) {
                 _this2.checkIRI(resolve);
@@ -160,7 +166,6 @@ var Field = function (_Base) {
         value: function end() {
             var proxy = this.proxy;
             this.proxy = null;
-            process.off('unhandledRejection', this.connRefused);
             clearInterval(this.iriChecker);
             clearInterval(this.updater);
 
@@ -220,27 +225,30 @@ var Field = function (_Base) {
             Promise.all([this.getAddress(), this.getNeighbors()]).then(function (tokens) {
                 var address = tokens[0];
                 var neighbors = tokens[1];
+                var json = {
+                    iri: _this4.iriData,
+                    neighbors: neighbors,
+                    field: {
+                        id: _this4.id,
+                        port: _this4.opts.port,
+                        version: version,
+                        name: _this4.opts.name,
+                        disableIRI: _this4.opts.disableIRI,
+                        pow: _this4.opts.pow,
+                        address: address
+                    }
+                };
+                console.log('http://' + _this4.opts.fieldHostname + '/api/v1/update');
+                console.log(JSON.stringify(json, null, 4));
                 request({
                     url: 'http://' + _this4.opts.fieldHostname + '/api/v1/update',
                     method: 'POST',
-                    json: {
-                        iri: _this4.iriData,
-                        neighbors: neighbors,
-                        field: {
-                            id: _this4.id,
-                            port: _this4.opts.port,
-                            version: version,
-                            name: _this4.opts.name,
-                            disableIRI: _this4.opts.disableIRI,
-                            pow: _this4.opts.pow,
-                            address: address
-                        }
-                    }
+                    json: json
                 }, function (err, resp, body) {
                     if (err) {
                         _this4.log(('Field update error to ' + _this4.opts.fieldHostname + ':').red, err.code);
                     }
-                    // this.log('Update response:', body);
+                    _this4.log('Update response:', body);
                 });
             });
         }
@@ -284,9 +292,9 @@ var Field = function (_Base) {
                         _this6.log('Could not get IRI neighbors...'.yellow);
                         return resolve([]);
                     }
-                    resolve(neighbors.map(function (n) {
+                    Promise.all(neighbors.map(function (n) {
                         return new URL(n.connectionType + '://' + n.address).hostname;
-                    }).map(getIP));
+                    }).map(getIP)).then(resolve);
                 });
             });
         }

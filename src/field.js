@@ -30,10 +30,17 @@ class Field extends Base {
     constructor (options) {
         const id = machineIdSync();
         const publicId = id.slice(0, 16);
+        const _cleanOpts = (options) => {
+            return {
+                ...options,
+                port: parseInt(options.port),
+                IRIPort: parseInt(options.IRIPort),
+            }
+        };
 
         super({
             ...DEFAULT_OPTIONS,
-            ...options, name: options.name || `CarrIOTA Field Node #${publicId}`
+            ..._cleanOpts(options), name: options.name || `CarrIOTA Field Node #${publicId}`
         });
         this.api = (new IOTA({ host: `http://${this.opts.IRIHostname}`, port: this.opts.IRIPort })).api;
         this.proxy = null;
@@ -111,7 +118,7 @@ class Field extends Base {
         this.iriChecker = setInterval(() => this.checkIRI(), 30000);
 
         // 3. Start updater
-        this.updater = setInterval(() => this.sendUpdates(), 5000);
+        this.updater = setInterval(() => this.sendUpdates(), 20000);
 
         return new Promise((resolve) => {
             this.checkIRI(resolve)
@@ -125,7 +132,6 @@ class Field extends Base {
     end () {
         const proxy = this.proxy;
         this.proxy = null;
-        process.off('unhandledRejection', this.connRefused);
         clearInterval(this.iriChecker);
         clearInterval(this.updater);
 
@@ -175,27 +181,30 @@ class Field extends Base {
         ]).then((tokens) => {
             const address = tokens[0];
             const neighbors = tokens[1];
+            const json = {
+                iri: this.iriData,
+                neighbors,
+                field: {
+                    id: this.id,
+                    port: this.opts.port,
+                    version,
+                    name: this.opts.name,
+                    disableIRI: this.opts.disableIRI,
+                    pow: this.opts.pow,
+                    address,
+                }
+            };
+            console.log(`http://${this.opts.fieldHostname}/api/v1/update`);
+            console.log(JSON.stringify(json, null, 4));
             request({
                 url: `http://${this.opts.fieldHostname}/api/v1/update`,
                 method: 'POST',
-                json: {
-                    iri: this.iriData,
-                    neighbors,
-                    field: {
-                        id: this.id,
-                        port: this.opts.port,
-                        version,
-                        name: this.opts.name,
-                        disableIRI: this.opts.disableIRI,
-                        pow: this.opts.pow,
-                        address,
-                    }
-                }
+                json
             }, (err, resp, body) => {
                 if (err) {
                     this.log(`Field update error to ${this.opts.fieldHostname}:`.red, err.code);
                 }
-                // this.log('Update response:', body);
+                this.log('Update response:', body);
             })
         })
     }
@@ -229,7 +238,9 @@ class Field extends Base {
                     this.log('Could not get IRI neighbors...'.yellow);
                     return resolve([])
                 }
-                resolve(neighbors.map((n) => (new URL(`${n.connectionType}://${n.address}`)).hostname).map(getIP));
+                Promise
+                    .all(neighbors.map((n) => (new URL(`${n.connectionType}://${n.address}`)).hostname).map(getIP))
+                    .then(resolve);
             });
         })
     }

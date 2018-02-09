@@ -22,10 +22,6 @@ var parseNumber = function parseNumber(v) {
 
 // TODO: write tests
 // TODO: write README
-// TODO: add pkg generation script
-// TODO: add main index.js
-// TODO: add Docker
-// TODO: add License
 program.version(version).option('-a, --address [value]', 'Optional IOTA address for donations', null).option('-b, --seed [value]', 'Optional IOTA seed for automatic donation address generation', null).option('-c, --config [value]', 'Config file path', null).option('-d, --disableIRI [value]', 'Do not allow public IRI connections through the Field', DEFAULT_OPTIONS.disableIRI).option('-f, --fieldHostname [value]', 'Hostname of the Field endpoint', process.env.FIELD_HOSTNAME || DEFAULT_OPTIONS.fieldHostname).option('-h, --IRIHostname [value]', 'IRI API hostname', process.env.IRI_HOSTNAME || DEFAULT_OPTIONS.IRIHostname).option('-i, --IRIPort [value]', 'IRI API port', parseNumber, process.env.IRI_PORT || DEFAULT_OPTIONS.IRIPort).option('-n, --name [value]', 'Name of your node instance', DEFAULT_OPTIONS.name).option('-p, --port [value]', 'Field port', parseNumber, DEFAULT_OPTIONS.port).option('-s, --silent [value]', 'Silent', DEFAULT_BASE_OPTIONS.silent).option('-w, --pow [value]', 'Allow attachToTange / PoW', DEFAULT_OPTIONS.pow).parse(process.argv);
 
 var configPath = process.env.NELSON_CONFIG || program.config;
