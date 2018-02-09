@@ -194,17 +194,15 @@ class Field extends Base {
                     address,
                 }
             };
-            console.log(`http://${this.opts.fieldHostname}/api/v1/update`);
-            console.log(JSON.stringify(json, null, 4));
             request({
                 url: `http://${this.opts.fieldHostname}/api/v1/update`,
                 method: 'POST',
                 json
             }, (err, resp, body) => {
-                if (err) {
+                if (err || resp.statusCode !== 200) {
                     this.log(`Field update error to ${this.opts.fieldHostname}:`.red, err.code);
                 }
-                this.log('Update response:', body);
+                //this.log('Update response:', body);
             })
         })
     }

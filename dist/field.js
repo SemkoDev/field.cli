@@ -238,17 +238,15 @@ var Field = function (_Base) {
                         address: address
                     }
                 };
-                console.log('http://' + _this4.opts.fieldHostname + '/api/v1/update');
-                console.log(JSON.stringify(json, null, 4));
                 request({
                     url: 'http://' + _this4.opts.fieldHostname + '/api/v1/update',
                     method: 'POST',
                     json: json
                 }, function (err, resp, body) {
-                    if (err) {
+                    if (err || resp.statusCode !== 200) {
                         _this4.log(('Field update error to ' + _this4.opts.fieldHostname + ':').red, err.code);
                     }
-                    _this4.log('Update response:', body);
+                    //this.log('Update response:', body);
                 });
             });
         }
