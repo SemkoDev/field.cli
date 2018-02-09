@@ -1,0 +1,7 @@
+.idea/
+temp/
+node_modules/
+builds/
+config.ini
+*.log
+*.iml
