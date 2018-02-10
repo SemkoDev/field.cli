@@ -21,7 +21,7 @@ const DEFAULT_OPTIONS = {
 };
 
 const ALLOWED_COMMANDS = [
-    'getNodeInfo', 'getTips', 'findTransactions', 'getTrytes', 'getInclusionStats',
+    'getNodeInfo', 'getTips', 'findTransactions', 'getTrytes', 'getInclusionStates',
     'getBalances', 'getTransactionsToApprove', 'broadcastTransactions', 'storeTransactions',
     'attachToTangle'
 ];
