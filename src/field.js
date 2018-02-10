@@ -200,7 +200,7 @@ class Field extends Base {
                 json
             }, (err, resp, body) => {
                 if (err || resp.statusCode !== 200) {
-                    this.log(`Field update error to ${this.opts.fieldHostname}:`.red, resp && resp.statusCode, err && err.code);
+                    this.log(`Field update error to ${this.opts.fieldHostname}:`.red, resp && resp.statusCode, err && err.code, body);
                 }
                 //this.log('Update response:', body);
             })

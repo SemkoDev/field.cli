@@ -27,7 +27,7 @@ program
     .option('-w, --pow [value]', 'Allow attachToTange / PoW', DEFAULT_OPTIONS.pow)
     .parse(process.argv);
 
-const configPath = process.env.NELSON_CONFIG || program.config;
+const configPath = process.env.FIELD_CONFIG || program.config;
 
 const field = new Field(configPath ? ini.parse(fs.readFileSync(configPath, 'utf-8')).field : program);
 

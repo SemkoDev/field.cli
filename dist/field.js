@@ -244,7 +244,7 @@ var Field = function (_Base) {
                     json: json
                 }, function (err, resp, body) {
                     if (err || resp.statusCode !== 200) {
-                        _this4.log(('Field update error to ' + _this4.opts.fieldHostname + ':').red, resp && resp.statusCode, err && err.code);
+                        _this4.log(('Field update error to ' + _this4.opts.fieldHostname + ':').red, resp && resp.statusCode, err && err.code, body);
                     }
                     //this.log('Update response:', body);
                 });
