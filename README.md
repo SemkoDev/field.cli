@@ -90,7 +90,7 @@ npm install -g field.cli@x.x.x
 ```
 
 **Please check where npm installs your global packages**! It happens very often that the first installed binary
-is put into ```/usr/local/bin``` and the updated into ```/usr/bin```. Run ```nelson --version``` after the upgrade
+is put into ```/usr/local/bin``` and the updated into ```/usr/bin```. Run ```field --version``` after the upgrade
 to make sure you are using the most recent one. Update your scripts and/or services to point to the right binary!
 
 ### Running as a service
@@ -104,11 +104,11 @@ npm install pm2 -g
 # Make pm2 start at startup:
 pm2 startup
 
-# Start the Nelson as service
-# If you created a nelson config somewhere on your system, provide the path to the config:
+# Start the Field as service
+# If you created a field config somewhere on your system, provide the path to the config:
 pm2 start field -- --config /path/to/field-config.ini
 
-# Otherwise you can just do: pm2 start nelson
+# Otherwise you can just do: pm2 start field
 
 # Save current processes runing with pm2 to startup on boot:
 pm2 save
@@ -152,7 +152,7 @@ Run tests and make binaries:
 yarn make
 ```
 
-Try to run Nelson:
+Try to run Field:
 
 ```
 node ./dist/field.js --pow
@@ -171,7 +171,7 @@ To use a configuration file, run Field with ```--config``` option:
 field --config ./config.ini
 
 # Alternatively, set an environment variable:
-FIELD_CONFIG= ./config.ini nelson
+FIELD_CONFIG= ./config.ini field
 ```
 
 You can provide one or more of the following options in your ini file. Example:
