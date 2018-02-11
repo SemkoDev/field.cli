@@ -219,7 +219,7 @@ class Field extends Base {
             if (!this.opts.seed) {
                 resolve(null)
             }
-            this.api.getNewAddress(this.opts.seed, (err, address) => {
+            this.api.getNewAddress(this.opts.seed, { checksum: true }, (err, address) => {
                 resolve(err ? null : address)
             })
         })
