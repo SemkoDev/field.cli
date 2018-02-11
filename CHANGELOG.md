@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Additional IRI commands from 1.3.0
+
 ## [0.1.2] - 2018-02-11
 
 ### Added

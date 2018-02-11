@@ -23,7 +23,8 @@ const DEFAULT_OPTIONS = {
 const ALLOWED_COMMANDS = [
     'getNodeInfo', 'getTips', 'findTransactions', 'getTrytes', 'getInclusionStates',
     'getBalances', 'getTransactionsToApprove', 'broadcastTransactions', 'storeTransactions',
-    'attachToTangle'
+    'attachToTangle', 'wereAddressesSpentFrom', 'getMissingTransactions',
+    'checkConsistency'
 ];
 
 class Field extends Base {
