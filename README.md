@@ -56,6 +56,23 @@ thus use something called "**IPv4 over DS Lite**". In those cases the **traffic 
 mentioned above. Unfortunately, there is no quick fix for this issue (maybe changing providers).
 There is some hope with the upcoming PCP-protocol, this will not happen this year (2018) for most providers, though.
 
+#### WARNING FOR IMAGE-BASED LINUX INSTALLATIONS
+
+Field relies on a unique machine identification. Image-based/VPS installations usually
+have the same id. If you run it, your field might be blacklisted or wrongly listed
+on the field server. To change the ID, do the following:
+
+```
+# 1. Remove the existing machine ID file:
+sudo rm /var/lib/dbus/machine-id
+
+# 2. Generate a new machine id:
+sudo dbus-uuidgen --ensure
+
+# 3. Reboot to apply the new machine ID system-wide:
+sudo shutdown -r now
+```
+
 #### WARNING FOR UBUNTU
 
 Ubuntu 16.04 apt comes with an **outdated Node version (4.X)**. You need to install the latest version separately:
@@ -143,7 +160,7 @@ cd field.cli
 Install dependencies:
 
 ```
-yarn install --pure-lockfile
+yarn
 ```
 
 Run tests and make binaries:

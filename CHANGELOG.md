@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Machine ID changing in the README
+
+### Changed
+- Added checksum to the address generation.
+
 ## [0.1.1] - 2018-02-10
 
 ### Changed
