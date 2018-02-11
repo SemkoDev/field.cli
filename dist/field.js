@@ -42,7 +42,7 @@ var DEFAULT_OPTIONS = {
     seed: null
 };
 
-var ALLOWED_COMMANDS = ['getNodeInfo', 'getTips', 'findTransactions', 'getTrytes', 'getInclusionStates', 'getBalances', 'getTransactionsToApprove', 'broadcastTransactions', 'storeTransactions', 'attachToTangle'];
+var ALLOWED_COMMANDS = ['getNodeInfo', 'getTips', 'findTransactions', 'getTrytes', 'getInclusionStates', 'getBalances', 'getTransactionsToApprove', 'broadcastTransactions', 'storeTransactions', 'attachToTangle', 'wereAddressesSpentFrom', 'getMissingTransactions', 'checkConsistency'];
 
 var Field = function (_Base) {
     _inherits(Field, _Base);
