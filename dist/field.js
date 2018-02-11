@@ -268,7 +268,7 @@ var Field = function (_Base) {
                 if (!_this5.opts.seed) {
                     resolve(null);
                 }
-                _this5.api.getNewAddress(_this5.opts.seed, function (err, address) {
+                _this5.api.getNewAddress(_this5.opts.seed, { checksum: true }, function (err, address) {
                     resolve(err ? null : address);
                 });
             });
