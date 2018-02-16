@@ -6,17 +6,17 @@ const dns = require('dns');
  * @param {string} ipOrHostName
  * @returns {Promise<string>}
  */
-function getIP (ipOrHostName) {
-    return new Promise((resolve) => {
-        if (ip.isV4Format(ipOrHostName) || ip.isV6Format(ipOrHostName)) {
-            return resolve(ipOrHostName);
-        }
-        dns.resolve(ipOrHostName, 'A', (error, results) => {
-            resolve(error ? ipOrHostName : results[0]);
-        })
+function getIP(ipOrHostName) {
+  return new Promise(resolve => {
+    if (ip.isV4Format(ipOrHostName) || ip.isV6Format(ipOrHostName)) {
+      return resolve(ipOrHostName);
+    }
+    dns.resolve(ipOrHostName, 'A', (error, results) => {
+      resolve(error ? ipOrHostName : results[0]);
     });
+  });
 }
 
 module.exports = {
-    getIP
+  getIP
 };

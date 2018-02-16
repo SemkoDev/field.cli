@@ -1,9 +1,9 @@
 require('colors');
 
 const DEFAULT_OPTIONS = {
-    silent: false,
-    logIdent: 'BASE',
-    logIdentWidth: 12
+  silent: false,
+  logIdent: 'BASE',
+  logIdentWidth: 12
 };
 
 /**
@@ -11,39 +11,42 @@ const DEFAULT_OPTIONS = {
  * @class Base
  */
 class Base {
-    constructor (options) {
-        this.opts = { ...DEFAULT_OPTIONS, ...options };
+  constructor(options) {
+    this.opts = { ...DEFAULT_OPTIONS, ...options };
+  }
+
+  log() {
+    if (!this.opts || !this.opts.silent || arguments[0] === '!!') {
+      const date = new Date();
+      const timeString = `${date.toLocaleTimeString()}.${this.formatMilliseconds(
+        date.getMilliseconds()
+      )}`.dim;
+      const space =
+        this.opts.logIdent.length > this.opts.logIdentWidth
+          ? `\n${' '.repeat(this.opts.logIdentWidth)}`
+          : ' '.repeat(this.opts.logIdentWidth - this.opts.logIdent.length);
+      const logIdent = `${this.opts.logIdent}${space}`.dim.bold;
+      console.log(`${timeString}\t${logIdent}`, ...arguments);
     }
+  }
 
-    log () {
-        if (!this.opts || !this.opts.silent || arguments[0] === '!!') {
-            const date = new Date();
-            const timeString = `${date.toLocaleTimeString()}.${this.formatMilliseconds(date.getMilliseconds())}`.dim;
-            const space = this.opts.logIdent.length > this.opts.logIdentWidth
-                ? `\n${' '.repeat(this.opts.logIdentWidth)}`
-                : ' '.repeat(this.opts.logIdentWidth - this.opts.logIdent.length);
-            const logIdent = `${this.opts.logIdent}${space}`.dim.bold;
-            console.log(`${timeString}\t${logIdent}`, ...arguments);
-        }
-    }
+  formatNode(hostname, port) {
+    return `${hostname}:${port}`.cyan;
+  }
 
-    formatNode (hostname, port) {
-        return `${hostname}:${port}`.cyan
-    }
+  formatMilliseconds(milliseconds) {
+    var formatted = milliseconds / 1000;
+    formatted = formatted.toFixed(3);
+    formatted = formatted.toString();
+    return formatted.slice(2);
+  }
 
-    formatMilliseconds(milliseconds){
-        var formatted = milliseconds / 1000;
-        formatted = formatted.toFixed(3);
-        formatted = formatted.toString();
-        return formatted.slice(2);
-    }
+  start() {}
 
-    start () {}
-
-    end () {}
+  end() {}
 }
 
 module.exports = {
-    DEFAULT_OPTIONS,
-    Base
+  DEFAULT_OPTIONS,
+  Base
 };
