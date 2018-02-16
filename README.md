@@ -11,23 +11,23 @@ https://medium.com/deviota/carriota-field-node-intel-and-balancing-223002156b54
 
 ## Table of contents
 
-  * [Getting Started](#getting-started)
-    * [Prerequisites](#prerequisites)
-    * [Installing](#installing)
-    * [Upgrading](#upgrading)
-    * [Running as a service](#running-as-a-service)
-  * [Docker](#docker)
-  * [Building Locally](#building-locally)
-  * [Configuration](#configuration)
-    * [config.ini](#config.ini)
-    * [Command line options](#command-line-options)
-    * [Options description](#options-description)
-  * [FAQ](#faq)
-  * [Contributing](#contributing)
-    * [Donations](#donations)
-    * [Donate to the Nodes](#donate-to-the-nodes)
-  * [Authors](#authors)
-  * [License](#license)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installing](#installing)
+  * [Upgrading](#upgrading)
+  * [Running as a service](#running-as-a-service)
+* [Docker](#docker)
+* [Building Locally](#building-locally)
+* [Configuration](#configuration)
+  * [config.ini](#config.ini)
+  * [Command line options](#command-line-options)
+  * [Options description](#options-description)
+* [FAQ](#faq)
+* [Contributing](#contributing)
+  * [Donations](#donations)
+  * [Donate to the Nodes](#donate-to-the-nodes)
+* [Authors](#authors)
+* [License](#license)
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ These instructions will get you a copy of the project up and running on your loc
 It is expected that you have already installed Java, downloaded the IRI jar file
 and know how to start it. The local IRI instance must have api enabled and accepting local connections.
 
-Field is running on Node.js You will have to install **node (at least version LTS 8.9.4)** and *npm* (node package manager) on your system.
+Field is running on Node.js You will have to install **node (at least version LTS 8.9.4)** and _npm_ (node package manager) on your system.
 Alternatively to npm you can (and should) use yarn package manager.
 
 #### Port Forwarding
@@ -93,27 +93,29 @@ And run it
 field --pow --address SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJCJESJPIEQCCKBUTVQPOW
 ```
 
-The  ```--pow``` option allows the Field server to pass "attachToTangle" jobs to your IRI.
+The `--pow` option allows the Field server to pass "attachToTangle" jobs to your IRI.
 
-With the  ```--address``` option you can specify an IOTA address for donations.
+With the `--address` option you can specify an IOTA address for donations.
 
 Below is the list of all possible options.
 
 ### Upgrading
 
 To upgrade your Field to version X.X.X, simply run:
+
 ```
 npm install -g field.cli@x.x.x
 ```
 
 **Please check where npm installs your global packages**! It happens very often that the first installed binary
-is put into ```/usr/local/bin``` and the updated into ```/usr/bin```. Run ```field --version``` after the upgrade
+is put into `/usr/local/bin` and the updated into `/usr/bin`. Run `field --version` after the upgrade
 to make sure you are using the most recent one. Update your scripts and/or services to point to the right binary!
 
 ### Running as a service
 
 You can use the [node process manager](http://pm2.keymetrics.io/) to run Field as a service.
 Just do the following:
+
 ```
 # Install the process manager:
 npm install pm2 -g
@@ -144,7 +146,6 @@ Provided you have docker installed, Field can be started as follows:
 docker run <docker opts> romansemko/field.cli <field command line opts>
 ```
 
-
 ## Building Locally
 
 If you are a developer you may want to build the project locally and play around with the sources.
@@ -172,17 +173,17 @@ yarn make
 Try to run Field:
 
 ```
-node ./dist/field.js --pow
+node ./dist/field.js --pow -y
 ```
 
 ## Configuration
 
-You are free to either use command line options or an ```.ini``` file to configure Field. If you use a config
+You are free to either use command line options or an `.ini` file to configure Field. If you use a config
 file, it has precedence and all command line options are ignored.
 
 ### config.ini
 
-To use a configuration file, run Field with ```--config``` option:
+To use a configuration file, run Field with `--config` option:
 
 ```
 field --config ./config.ini
@@ -205,6 +206,8 @@ address = SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJ
 port = 21310
 pow = true
 disableIRI = false
+; If you want Field to generate a custom id, instead of using machine-id
+customFieldId = true
 ```
 
 ### Command line options
@@ -214,18 +217,19 @@ Some have additional short versions.
 
 ### Options description
 
-| Option                 |      Description                        | Default |
-|------------------------|-----------------------------------------|---------|
-| --name |  Name your node. This identifier will appear on the CarrIOTA Field Dashboard |CarrIOTA Field|
-| --address, -a | Optional IOTA address for donations. ||
-| --seed, -b |  Optional. If no donation address is provided, you can provide a seed. In that case the field client will generate new, unused addresses dynamically. WARNING! Please do not use your usual, main seed. Generate a new one for this occasion. It is easy and adds up to everyone's security.||
-| --config, -c | Path to Field configuration file. ||
-| --disableIRI, -d | Do not allow jobs to be passed from the Field load balancer. Just send the statistics about my  node. |false|
-| --iriHostname, -h | Hostname where your IRI instance is running. |localhost|
-| --iriPort, -i | API port of your IRI instance. |14265|
-| --port, -p | Field port to be used |21310|
-| --silent, -s | Do not print log messages |false|
-| --pow, -w | Allow attachToTangle jobs to be passed from the Field server load balancer. It only has effect when disableIRI is false. |false|
+| Option              | Description                                                                                                                                                                                                                                                                                 | Default        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| --name              | Name your node. This identifier will appear on the CarrIOTA Field Dashboard                                                                                                                                                                                                                 | CarrIOTA Field |
+| --address, -a       | Optional IOTA address for donations.                                                                                                                                                                                                                                                        |                |
+| --seed, -b          | Optional. If no donation address is provided, you can provide a seed. In that case the field client will generate new, unused addresses dynamically. WARNING! Please do not use your usual, main seed. Generate a new one for this occasion. It is easy and adds up to everyone's security. |                |
+| --config, -c        | Path to Field configuration file.                                                                                                                                                                                                                                                           |                |
+| --disableIRI, -d    | Do not allow jobs to be passed from the Field load balancer. Just send the statistics about my node.                                                                                                                                                                                        | false          |
+| --iriHostname, -h   | Hostname where your IRI instance is running.                                                                                                                                                                                                                                                | localhost      |
+| --iriPort, -i       | API port of your IRI instance.                                                                                                                                                                                                                                                              | 14265          |
+| --port, -p          | Field port to be used                                                                                                                                                                                                                                                                       | 21310          |
+| --silent, -s        | Do not print log messages                                                                                                                                                                                                                                                                   | false          |
+| --pow, -w           | Allow attachToTangle jobs to be passed from the Field server load balancer. It only has effect when disableIRI is false.                                                                                                                                                                    | false          |
+| --customFieldId, -y | If you want Field to generate a custom id, instead of using machine-id. This is required for VPS and servers created from an image, which often have the same machine ID.                                                                                                                   | false          |
 
 ## Contributing
 
@@ -237,7 +241,6 @@ Some have additional short versions.
 SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJCJESJPIEQCCKBUTVQPOW
 ```
 
-
 ### Donate to the Nodes
 
 We are currently working to add automatic donations to participating nodes based on the work done.
@@ -245,12 +248,10 @@ This feature is still in progress, however you can already tip the nodes. Just
 go to http://field.carriota.com select a node, copy its donation address and
 show it some love!
 
-
 ## Authors
 
-* **Roman Semko** - *SemkoDev* - (https://github.com/romansemko)
+* **Roman Semko** - _SemkoDev_ - (https://github.com/romansemko)
 
 ## License
 
 This project is licensed under the ICS License - see the [LICENSE.md](LICENSE.md) file for details
-
