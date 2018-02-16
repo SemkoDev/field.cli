@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.4] - 2018-02-16
+
 ### Added
 
 * Fixed #10 and #3 - Custom machine/field IDs support

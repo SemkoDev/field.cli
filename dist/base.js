@@ -9,9 +9,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 require('colors');
 
 var DEFAULT_OPTIONS = {
-    silent: false,
-    logIdent: 'BASE',
-    logIdentWidth: 12
+  silent: false,
+  logIdent: 'BASE',
+  logIdentWidth: 12
 };
 
 /**
@@ -20,50 +20,50 @@ var DEFAULT_OPTIONS = {
  */
 
 var Base = function () {
-    function Base(options) {
-        _classCallCheck(this, Base);
+  function Base(options) {
+    _classCallCheck(this, Base);
 
-        this.opts = _extends({}, DEFAULT_OPTIONS, options);
+    this.opts = _extends({}, DEFAULT_OPTIONS, options);
+  }
+
+  _createClass(Base, [{
+    key: 'log',
+    value: function log() {
+      if (!this.opts || !this.opts.silent || arguments[0] === '!!') {
+        var _console;
+
+        var date = new Date();
+        var timeString = (date.toLocaleTimeString() + '.' + this.formatMilliseconds(date.getMilliseconds())).dim;
+        var space = this.opts.logIdent.length > this.opts.logIdentWidth ? '\n' + ' '.repeat(this.opts.logIdentWidth) : ' '.repeat(this.opts.logIdentWidth - this.opts.logIdent.length);
+        var logIdent = ('' + this.opts.logIdent + space).dim.bold;
+        (_console = console).log.apply(_console, [timeString + '\t' + logIdent].concat(Array.prototype.slice.call(arguments)));
+      }
     }
+  }, {
+    key: 'formatNode',
+    value: function formatNode(hostname, port) {
+      return (hostname + ':' + port).cyan;
+    }
+  }, {
+    key: 'formatMilliseconds',
+    value: function formatMilliseconds(milliseconds) {
+      var formatted = milliseconds / 1000;
+      formatted = formatted.toFixed(3);
+      formatted = formatted.toString();
+      return formatted.slice(2);
+    }
+  }, {
+    key: 'start',
+    value: function start() {}
+  }, {
+    key: 'end',
+    value: function end() {}
+  }]);
 
-    _createClass(Base, [{
-        key: 'log',
-        value: function log() {
-            if (!this.opts || !this.opts.silent || arguments[0] === '!!') {
-                var _console;
-
-                var date = new Date();
-                var timeString = (date.toLocaleTimeString() + '.' + this.formatMilliseconds(date.getMilliseconds())).dim;
-                var space = this.opts.logIdent.length > this.opts.logIdentWidth ? '\n' + ' '.repeat(this.opts.logIdentWidth) : ' '.repeat(this.opts.logIdentWidth - this.opts.logIdent.length);
-                var logIdent = ('' + this.opts.logIdent + space).dim.bold;
-                (_console = console).log.apply(_console, [timeString + '\t' + logIdent].concat(Array.prototype.slice.call(arguments)));
-            }
-        }
-    }, {
-        key: 'formatNode',
-        value: function formatNode(hostname, port) {
-            return (hostname + ':' + port).cyan;
-        }
-    }, {
-        key: 'formatMilliseconds',
-        value: function formatMilliseconds(milliseconds) {
-            var formatted = milliseconds / 1000;
-            formatted = formatted.toFixed(3);
-            formatted = formatted.toString();
-            return formatted.slice(2);
-        }
-    }, {
-        key: 'start',
-        value: function start() {}
-    }, {
-        key: 'end',
-        value: function end() {}
-    }]);
-
-    return Base;
+  return Base;
 }();
 
 module.exports = {
-    DEFAULT_OPTIONS: DEFAULT_OPTIONS,
-    Base: Base
+  DEFAULT_OPTIONS: DEFAULT_OPTIONS,
+  Base: Base
 };
