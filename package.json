@@ -1,6 +1,6 @@
 {
   "name": "field.cli",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "CarrIOTA Field Client",
   "main": "dist/field.js",
   "homepage": "https://semkodev.com",
@@ -16,20 +16,19 @@
   "bin": {
     "field": "./dist/index.js"
   },
-  "files": [
-    "src",
-    "dist",
-    "README.md",
-    "LICENSE.md"
-  ],
+  "files": ["src", "dist", "README.md", "LICENSE.md"],
   "scripts": {
     "start": "node src/index.js",
     "watch": "npm-watch start",
     "test": "jest -b",
-    "build": "rimraf dist/ && babel ./src --out-dir dist/ --ignore ./node_modules --ignore __tests__ --copy-files",
-    "make:binaries": "rimraf builds/ && pkg -t node6-linux,node6-win,node6-macos -o builds/field-`cat package.json | jq -r '.version'` dist/field.js",
-    "make": "npm run test && npm run fix && npm run build && npm run make:binaries",
-    "fix": "prettier --single-quote --write src/**/*.js src/*.js package.json *.md"
+    "build":
+      "rimraf dist/ && babel ./src --out-dir dist/ --ignore ./node_modules --ignore __tests__ --copy-files",
+    "make:binaries":
+      "rimraf builds/ && pkg -t node6-linux,node6-win,node6-macos -o builds/field-`cat package.json | jq -r '.version'` dist/field.js",
+    "make":
+      "npm run test && npm run fix && npm run build && npm run make:binaries",
+    "fix":
+      "prettier --single-quote --write src/**/*.js src/*.js package.json *.md"
   },
   "dependencies": {
     "colors": "^1.1.2",
@@ -52,17 +51,8 @@
     "rimraf": "^2.6.2"
   },
   "jest": {
-    "testMatch": [
-      "**/__tests__/**/*-test.js?(x)"
-    ],
-    "roots": [
-      "src"
-    ]
+    "testMatch": ["**/__tests__/**/*-test.js?(x)"],
+    "roots": ["src"]
   },
-  "keywords": [
-    "blockchain",
-    "IOTA",
-    "tangle",
-    "p2p"
-  ]
+  "keywords": ["blockchain", "IOTA", "tangle", "p2p"]
 }

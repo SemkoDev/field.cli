@@ -110,6 +110,7 @@ var Field = function (_Base) {
       this.proxy = hoxy.createServer({
         upstreamProxy: this.opts.IRIHostname + ':' + this.opts.IRIPort
       }).listen(this.opts.port);
+      this.proxy._server.timeout = 0;
       this.proxy.intercept({
         phase: 'request',
         as: 'string'
