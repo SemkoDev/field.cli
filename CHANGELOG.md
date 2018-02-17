@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Fixes timeouts on PoW (attachToTangle) calls
+* Upgrades iota.lib.js
+
 ## [0.1.4] - 2018-02-16
 
 ### Added
