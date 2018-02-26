@@ -3,5 +3,11 @@ name = MyField
 IRIPort = 14265
 IRIHostname = localhost
 address = SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJCJESJPIEQCCKBUTVQPOW
+; Alternatively to address, you can provide a (NEW) seed
+; In this case, the Field cient will be generating new, unused addresses dynamically.
+; seed = XYZ
 port = 21310
 pow = true
+disableIRI = false
+; If you want Field to generate a custom id, instead of using machine-id
+customFieldId = true
