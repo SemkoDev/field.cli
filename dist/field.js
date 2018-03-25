@@ -38,6 +38,7 @@ var fieldIDFilePath = path.join(os.homedir(), '.carriota-field.id');
 
 var DEFAULT_OPTIONS = {
   name: null,
+  bindAddress: '0.0.0.0',
   port: 21310,
   fieldHostname: 'field.carriota.com',
   IRIHostname: 'localhost',
@@ -109,7 +110,7 @@ var Field = function (_Base) {
       // 1: Start the proxy server
       this.proxy = hoxy.createServer({
         upstreamProxy: this.opts.IRIHostname + ':' + this.opts.IRIPort
-      }).listen(this.opts.port);
+      }).listen(this.opts.port, this.opts.bindAddress);
       this.proxy._server.timeout = 0;
       this.proxy.intercept({
         phase: 'request',
