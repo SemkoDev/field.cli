@@ -228,8 +228,23 @@ Some have additional short versions.
 | --iriPort, -i       | API port of your IRI instance.                                                                                                                                                                                                                                                              | 14265          |
 | --port, -p          | Field port to be used                                                                                                                                                                                                                                                                       | 21310          |
 | --silent, -s        | Do not print log messages                                                                                                                                                                                                                                                                   | false          |
-| --pow, -w           | Allow attachToTangle jobs to be passed from the Field server load balancer. It only has effect when disableIRI is false.                                                                                                                                                                    | false          |
+| --pow, -w           | Allow attachToTangle jobs to be passed from the Field server load balancer. When disableIRI and pow are true, only PoW work will be passed to IRI.                                                                                                                                                                    | false          |
 | --customFieldId, -y | If you want Field to generate a custom id, instead of using machine-id. This is required for VPS and servers created from an image, which often have the same machine ID.                                                                                                                   | false          |
+
+### Run PoW jobs only
+
+If you disableIRI and set "pow" to true, your node will only pass attachToTangle jobs t IRI.
+The jobs will be sent, even if your IRI is not synchronized, since proof-of-work does not require a
+synchronized node.
+
+Sample config:
+
+```
+# Disable IRI Jobs
+disableIRI = true
+# Except attachToTangle proof-of-work
+pow = true
+```
 
 ## Contributing
 
@@ -238,7 +253,7 @@ Some have additional short versions.
 **Donations always welcome**:
 
 ```
-SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJCJESJPIEQCCKBUTVQPOW
+YHZIJOENEFSDMZGZA9WOGFTRXOFPVFFCDEYEFHPUGKEUAOTTMVLPSSNZNHRJD99WAVESLFPSGLMTUEIBDZRKBKXWZD
 ```
 
 ### Donate to the Nodes
