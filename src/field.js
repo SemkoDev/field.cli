@@ -16,7 +16,7 @@ const fieldIDFilePath = path.join(os.homedir(), '.carriota-field.id');
 const DEFAULT_OPTIONS = {
   name: null,
   port: 21310,
-  fieldHostname: 'field.carriota.com',
+  fieldHostname: ['field.carriota.com'],
   IRIHostname: 'localhost',
   IRIPort: 14265,
   logIdent: 'FIELD',
@@ -70,12 +70,36 @@ class Field extends Base {
     this.iriData = null;
     this.id = id;
     this.publicId = publicId;
-    this.log(`Field Client v.${version}`.bold.green);
-    this.log(`Field ID: ${this.id}`);
-    this.log(`Public ID: ${this.publicId}`);
-    if (this.opts.disableIRI) {
-      this.log('Public IRI access through the Field is disabled');
+
+    this.log(`Field Client      v.${version}`.bold.green);
+    this.log(`Field ID:         ${this.id} (do NOT share online!)`);
+    this.log(`Public ID:        ${this.publicId}`);
+    this.log(`Field Server(s):  ${this.opts.fieldHostname.join(' ')}`);
+    this.log(
+      `Donations:        ${
+        this.opts.seed || this.opts.address ? 'ENABLED' : 'DISABLED'
+      }`
+    );
+    if (this.opts.seed || this.opts.address) {
+      const donationsString = this.opts.address
+        ? `Static IOTA donations address: ${this.opts.address}`
+        : `Seed for dynamic IOTA address generation: ${this.opts.seed.slice(
+            0,
+            3
+          )}*****`;
+      this.log(`Donations:        ${donationsString}`);
     }
+    this.log(
+      `IRI:              Public access through the Field is ${
+        this.opts.disableIRI ? 'DISABLED' : 'ENABLED'
+      }`
+    );
+    this.log(
+      `IRI:              PoW (attachToTangle) jobs are ${
+        this.opts.pow ? 'ENABLED' : 'DISABLED'
+      }`
+    );
+
     this.connRefused = reason => {
       if (reason.code === 'ECONNREFUSED') {
         this.log(
@@ -158,7 +182,10 @@ class Field extends Base {
     this.updater = setInterval(() => this.sendUpdates(), 20000);
 
     return new Promise(resolve => {
-      this.checkIRI(resolve);
+      this.checkIRI(() => {
+        this.sendUpdates();
+        resolve();
+      });
     });
   }
 
@@ -228,24 +255,29 @@ class Field extends Base {
           address
         }
       };
-      request(
-        {
-          url: `http://${this.opts.fieldHostname}/api/v1/update`,
-          method: 'POST',
-          json
-        },
-        (err, resp, body) => {
-          if (err || resp.statusCode !== 200) {
-            this.log(
-              `Field update error to ${this.opts.fieldHostname}:`.red,
-              resp && resp.statusCode,
-              err && err.code,
-              body
-            );
+      this.opts.fieldHostname.forEach(fieldHostname => {
+        request(
+          {
+            url: `http://${fieldHostname}/api/v1/update`,
+            method: 'POST',
+            json
+          },
+          (err, resp, body) => {
+            if (err || resp.statusCode !== 200) {
+              this.log(`ERROR pinging Field Server ${fieldHostname}:`.red);
+              if (err && err.code) {
+                this.log(`- LOCAL Client error message: ${err.code}`);
+              }
+              if (body && body.error) {
+                this.log(
+                  `- REMOTE Server error message (HTTP Code ${resp &&
+                    resp.statusCode}): ${body.error}`
+                );
+              }
+            }
           }
-          //this.log('Update response:', body);
-        }
-      );
+        );
+      });
     });
   }
 
@@ -265,6 +297,13 @@ class Field extends Base {
         this.opts.seed,
         { checksum: true },
         (err, address) => {
+          if (err) {
+            this.log(
+              'ERROR: Could not generate a donation address with your seed:',
+              err
+            );
+            this.log('...pinging without a donation address');
+          }
           resolve(err ? null : address);
         }
       );

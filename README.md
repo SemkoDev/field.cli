@@ -197,17 +197,36 @@ You can provide one or more of the following options in your ini file. Example:
 ```
 [field]
 name = MyField
+; Optional, which IP to bind the node on
+bindAddress = 0.0.0.0
+port = 21310
+; If you want Field to generate a custom id, instead of using machine-id.
+; This is the safest and favored way:
+customFieldId = true
+
+; You can choose which Field(s) to connect to:
+fieldHostname[] = field.carriota.com:80
+; It can be several Fields. Just repeat:
+; fieldHostname[] = field.carriota.com:80
+; fieldHostname[] = another.field.com:8080
+; fieldHostname[] = mytest.field.com:5000
+
+; IRI connection details:
 IRIPort = 14265
 IRIHostname = localhost
+
 address = SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJCJESJPIEQCCKBUTVQPOW
 ; Alternatively to address, you can provide a (NEW) seed
-; In this case, the Field cient will be generating new, unused addresses dynamically.
+; In this case, the Field client will be generating new, unused addresses dynamically.
 ; seed = XYZ
-port = 21310
+
+; What jobs your node should be able to accept:
+; both true         - only attachToTangle jobs accepted
+; disableIRI false  - all jobs accepted
+; pow false         - no jobs accepted
+; both false        - all jobs except attachToTangle accepted
 pow = true
 disableIRI = false
-; If you want Field to generate a custom id, instead of using machine-id
-customFieldId = true
 ```
 
 ### Command line options
@@ -217,19 +236,20 @@ Some have additional short versions.
 
 ### Options description
 
-| Option              | Description                                                                                                                                                                                                                                                                                 | Default        |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| --name              | Name your node. This identifier will appear on the CarrIOTA Field Dashboard                                                                                                                                                                                                                 | CarrIOTA Field |
-| --address, -a       | Optional IOTA address for donations.                                                                                                                                                                                                                                                        |                |
-| --seed, -b          | Optional. If no donation address is provided, you can provide a seed. In that case the field client will generate new, unused addresses dynamically. WARNING! Please do not use your usual, main seed. Generate a new one for this occasion. It is easy and adds up to everyone's security. |                |
-| --config, -c        | Path to Field configuration file.                                                                                                                                                                                                                                                           |                |
-| --disableIRI, -d    | Do not allow jobs to be passed from the Field load balancer. Just send the statistics about my node.                                                                                                                                                                                        | false          |
-| --iriHostname, -h   | Hostname where your IRI instance is running.                                                                                                                                                                                                                                                | localhost      |
-| --iriPort, -i       | API port of your IRI instance.                                                                                                                                                                                                                                                              | 14265          |
-| --port, -p          | Field port to be used                                                                                                                                                                                                                                                                       | 21310          |
-| --silent, -s        | Do not print log messages                                                                                                                                                                                                                                                                   | false          |
-| --pow, -w           | Allow attachToTangle jobs to be passed from the Field server load balancer. When disableIRI and pow are true, only PoW work will be passed to IRI.                                                                                                                                                                    | false          |
-| --customFieldId, -y | If you want Field to generate a custom id, instead of using machine-id. This is required for VPS and servers created from an image, which often have the same machine ID.                                                                                                                   | false          |
+| Option              | Description                                                                                                                                                                                                                                                                                 | Default               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| --name              | Name your node. This identifier will appear on the CarrIOTA Field Dashboard                                                                                                                                                                                                                 | CarrIOTA Field        |
+| --address, -a       | Optional IOTA address for donations.                                                                                                                                                                                                                                                        |                       |
+| --seed, -b          | Optional. If no donation address is provided, you can provide a seed. In that case the field client will generate new, unused addresses dynamically. WARNING! Please do not use your usual, main seed. Generate a new one for this occasion. It is easy and adds up to everyone's security. |                       |
+| --config, -c        | Path to Field configuration file.                                                                                                                                                                                                                                                           |                       |
+| --disableIRI, -d    | Do not allow jobs to be passed from the Field load balancer. Just send the statistics about my node.                                                                                                                                                                                        | false                 |
+| --fieldHostname, -f | Field Server hostname (including port) or a space-separated list of multiple Field Server hostnames.                                                                                                                                                                                        | field.carriota.com:80 |
+| --iriHostname, -h   | Hostname where your IRI instance is running.                                                                                                                                                                                                                                                | localhost             |
+| --iriPort, -i       | API port of your IRI instance.                                                                                                                                                                                                                                                              | 14265                 |
+| --port, -p          | Field port to be used                                                                                                                                                                                                                                                                       | 21310                 |
+| --silent, -s        | Do not print log messages                                                                                                                                                                                                                                                                   | false                 |
+| --pow, -w           | Allow attachToTangle jobs to be passed from the Field server load balancer. When disableIRI and pow are true, only PoW work will be passed to IRI.                                                                                                                                          | false                 |
+| --customFieldId, -y | If you want Field to generate a custom id, instead of using machine-id. This is required for VPS and servers created from an image, which often have the same machine ID.                                                                                                                   | false                 |
 
 ### Run PoW jobs only
 

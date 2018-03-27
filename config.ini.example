@@ -7,13 +7,20 @@ port = 21310
 ; This is the safest and favored way:
 customFieldId = true
 
+; You can choose which Field(s) to connect to:
+fieldHostname[] = field.carriota.com:80
+; It can be several Fields. Just repeat:
+; fieldHostname[] = field.carriota.com:80
+; fieldHostname[] = another.field.com:8080
+; fieldHostname[] = mytest.field.com:5000
+
 ; IRI connection details:
 IRIPort = 14265
 IRIHostname = localhost
 
 address = SOZAIPJMQUBOFCTDTJJDXCZEKNIYZGIGVDLFMH9FFBAYK9SWGTBCWVUTFHXDOUESZAXRJJCJESJPIEQCCKBUTVQPOW
 ; Alternatively to address, you can provide a (NEW) seed
-; In this case, the Field cient will be generating new, unused addresses dynamically.
+; In this case, the Field client will be generating new, unused addresses dynamically.
 ; seed = XYZ
 
 ; What jobs your node should be able to accept:
