@@ -1,6 +1,6 @@
 {
   "name": "field.cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "CarrIOTA Field Client",
   "main": "dist/field.js",
   "homepage": "https://semkodev.com",
