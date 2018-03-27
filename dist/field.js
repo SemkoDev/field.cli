@@ -38,9 +38,8 @@ var fieldIDFilePath = path.join(os.homedir(), '.carriota-field.id');
 
 var DEFAULT_OPTIONS = {
   name: null,
-  bindAddress: '0.0.0.0',
   port: 21310,
-  fieldHostname: 'field.carriota.com',
+  fieldHostname: ['field.carriota.com'],
   IRIHostname: 'localhost',
   IRIPort: 14265,
   logIdent: 'FIELD',
@@ -82,12 +81,19 @@ var Field = function (_Base) {
     _this.iriData = null;
     _this.id = id;
     _this.publicId = publicId;
-    _this.log(('Field Client v.' + version).bold.green);
-    _this.log('Field ID: ' + _this.id);
-    _this.log('Public ID: ' + _this.publicId);
-    if (_this.opts.disableIRI) {
-      _this.log('Public IRI access through the Field is disabled');
+
+    _this.log(('Field Client      v.' + version).bold.green);
+    _this.log('Field ID:         ' + _this.id + ' (do NOT share online!)');
+    _this.log('Public ID:        ' + _this.publicId);
+    _this.log('Field Server(s):  ' + _this.opts.fieldHostname.join(' '));
+    _this.log('Donations:        ' + (_this.opts.seed || _this.opts.address ? 'ENABLED' : 'DISABLED'));
+    if (_this.opts.seed || _this.opts.address) {
+      var donationsString = _this.opts.address ? 'Static IOTA donations address: ' + _this.opts.address : 'Seed for dynamic IOTA address generation: ' + _this.opts.seed.slice(0, 3) + '*****';
+      _this.log('Donations:        ' + donationsString);
     }
+    _this.log('IRI:              Public access through the Field is ' + (_this.opts.disableIRI ? 'DISABLED' : 'ENABLED'));
+    _this.log('IRI:              PoW (attachToTangle) jobs are ' + (_this.opts.pow ? 'ENABLED' : 'DISABLED'));
+
     _this.connRefused = function (reason) {
       if (reason.code === 'ECONNREFUSED') {
         _this.log(('Proxy error: IRI connection refused: http://' + _this.opts.IRIHostname + ':' + _this.opts.IRIPort).red);
@@ -110,7 +116,7 @@ var Field = function (_Base) {
       // 1: Start the proxy server
       this.proxy = hoxy.createServer({
         upstreamProxy: this.opts.IRIHostname + ':' + this.opts.IRIPort
-      }).listen(this.opts.port, this.opts.bindAddress);
+      }).listen(this.opts.port);
       this.proxy._server.timeout = 0;
       this.proxy.intercept({
         phase: 'request',
@@ -166,7 +172,10 @@ var Field = function (_Base) {
       }, 20000);
 
       return new Promise(function (resolve) {
-        _this2.checkIRI(resolve);
+        _this2.checkIRI(function () {
+          _this2.sendUpdates();
+          resolve();
+        });
       });
     }
 
@@ -252,15 +261,22 @@ var Field = function (_Base) {
             address: address
           }
         };
-        request({
-          url: 'http://' + _this4.opts.fieldHostname + '/api/v1/update',
-          method: 'POST',
-          json: json
-        }, function (err, resp, body) {
-          if (err || resp.statusCode !== 200) {
-            _this4.log(('Field update error to ' + _this4.opts.fieldHostname + ':').red, resp && resp.statusCode, err && err.code, body);
-          }
-          //this.log('Update response:', body);
+        _this4.opts.fieldHostname.forEach(function (fieldHostname) {
+          request({
+            url: 'http://' + fieldHostname + '/api/v1/update',
+            method: 'POST',
+            json: json
+          }, function (err, resp, body) {
+            if (err || resp.statusCode !== 200) {
+              _this4.log(('ERROR pinging Field Server ' + fieldHostname + ':').red);
+              if (err && err.code) {
+                _this4.log('- LOCAL Client error message: ' + err.code);
+              }
+              if (body && body.error) {
+                _this4.log('- REMOTE Server error message (HTTP Code ' + (resp && resp.statusCode) + '): ' + body.error);
+              }
+            }
+          });
         });
       });
     }
@@ -283,6 +299,10 @@ var Field = function (_Base) {
           resolve(null);
         }
         _this5.api.getNewAddress(_this5.opts.seed, { checksum: true }, function (err, address) {
+          if (err) {
+            _this5.log('ERROR: Could not generate a donation address with your seed:', err);
+            _this5.log('...pinging without a donation address');
+          }
           resolve(err ? null : address);
         });
       });
