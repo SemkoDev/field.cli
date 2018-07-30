@@ -8,9 +8,9 @@ port = 21310
 customFieldId = true
 
 ; You can choose which Field(s) to connect to:
-fieldHostname[] = field.carriota.com:80
+fieldHostname[] = field.deviota.com:80
 ; It can be several Fields. Just repeat:
-; fieldHostname[] = field.carriota.com:80
+; fieldHostname[] = field.deviota.com:80
 ; fieldHostname[] = another.field.com:8080
 ; fieldHostname[] = mytest.field.com:5000
 

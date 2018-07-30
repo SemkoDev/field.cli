@@ -39,7 +39,7 @@ var fieldIDFilePath = path.join(os.homedir(), '.carriota-field.id');
 var DEFAULT_OPTIONS = {
   name: null,
   port: 21310,
-  fieldHostname: ['field.carriota.com'],
+  fieldHostname: ['field.deviota.com'],
   IRIHostname: 'localhost',
   IRIPort: 14265,
   logIdent: 'FIELD',
@@ -68,7 +68,7 @@ var Field = function (_Base) {
     };
 
     var _this = _possibleConstructorReturn(this, (Field.__proto__ || Object.getPrototypeOf(Field)).call(this, _extends({}, DEFAULT_OPTIONS, _cleanOpts(options), {
-      name: options.name || 'CarrIOTA Field Node #' + publicId
+      name: options.name || 'DevIOTA Field Node #' + publicId
     })));
 
     _this.api = new IOTA({

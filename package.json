@@ -1,7 +1,7 @@
 {
   "name": "field.cli",
-  "version": "0.1.6",
-  "description": "CarrIOTA Field Client",
+  "version": "0.1.7",
+  "description": "DevIOTA Field Client",
   "main": "dist/field.js",
   "homepage": "https://semkodev.com",
   "author": "Roman Semko <roman@deviota.com> (http://twitter.com/RomanSemko)",

@@ -1,13 +1,8 @@
-# CarrIOTA Field
+# DevIOTA Field
 
-Carriota Field is a Proxy for your IRI, that sends regular statistics
-to the Field server (http://field.carriota.com) and accepts jobs from the
+DevIOTA Field is a Proxy for your IRI, that sends regular statistics
+to the Field server (http://field.deviota.com) and accepts jobs from the
 server's load balancer (optional).
-
-It is extremely tiny layer/app that does not require much resources.
-The idea behind Field is explained here:
-
-https://medium.com/deviota/carriota-field-node-intel-and-balancing-223002156b54
 
 ## Table of contents
 
@@ -205,9 +200,9 @@ port = 21310
 customFieldId = true
 
 ; You can choose which Field(s) to connect to:
-fieldHostname[] = field.carriota.com:80
+fieldHostname[] = field.deviota.com:80
 ; It can be several Fields. Just repeat:
-; fieldHostname[] = field.carriota.com:80
+; fieldHostname[] = field.deviota.com:80
 ; fieldHostname[] = another.field.com:8080
 ; fieldHostname[] = mytest.field.com:5000
 
@@ -238,12 +233,12 @@ Some have additional short versions.
 
 | Option              | Description                                                                                                                                                                                                                                                                                 | Default               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| --name              | Name your node. This identifier will appear on the CarrIOTA Field Dashboard                                                                                                                                                                                                                 | CarrIOTA Field        |
+| --name              | Name your node. This identifier will appear on the DevIOTA Field Dashboard                                                                                                                                                                                                                 | CarrIOTA Field        |
 | --address, -a       | Optional IOTA address for donations.                                                                                                                                                                                                                                                        |                       |
 | --seed, -b          | Optional. If no donation address is provided, you can provide a seed. In that case the field client will generate new, unused addresses dynamically. WARNING! Please do not use your usual, main seed. Generate a new one for this occasion. It is easy and adds up to everyone's security. |                       |
 | --config, -c        | Path to Field configuration file.                                                                                                                                                                                                                                                           |                       |
 | --disableIRI, -d    | Do not allow jobs to be passed from the Field load balancer. Just send the statistics about my node.                                                                                                                                                                                        | false                 |
-| --fieldHostname, -f | Field Server hostname (including port) or a space-separated list of multiple Field Server hostnames.                                                                                                                                                                                        | field.carriota.com:80 |
+| --fieldHostname, -f | Field Server hostname (including port) or a space-separated list of multiple Field Server hostnames.                                                                                                                                                                                        | field.deviota.com:80  |
 | --iriHostname, -h   | Hostname where your IRI instance is running.                                                                                                                                                                                                                                                | localhost             |
 | --iriPort, -i       | API port of your IRI instance.                                                                                                                                                                                                                                                              | 14265                 |
 | --port, -p          | Field port to be used                                                                                                                                                                                                                                                                       | 21310                 |
@@ -280,7 +275,7 @@ YHZIJOENEFSDMZGZA9WOGFTRXOFPVFFCDEYEFHPUGKEUAOTTMVLPSSNZNHRJD99WAVESLFPSGLMTUEIB
 
 We are currently working to add automatic donations to participating nodes based on the work done.
 This feature is still in progress, however you can already tip the nodes. Just
-go to http://field.carriota.com select a node, copy its donation address and
+go to http://field.deviota.com select a node, copy its donation address and
 show it some love!
 
 ## Authors
