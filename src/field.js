@@ -16,7 +16,7 @@ const fieldIDFilePath = path.join(os.homedir(), '.carriota-field.id');
 const DEFAULT_OPTIONS = {
   name: null,
   port: 21310,
-  fieldHostname: ['field.carriota.com'],
+  fieldHostname: ['field.deviota.com'],
   IRIHostname: 'localhost',
   IRIPort: 14265,
   logIdent: 'FIELD',
@@ -58,7 +58,7 @@ class Field extends Base {
     super({
       ...DEFAULT_OPTIONS,
       ..._cleanOpts(options),
-      name: options.name || `CarrIOTA Field Node #${publicId}`
+      name: options.name || `DevIOTA Field Node #${publicId}`
     });
     this.api = new IOTA({
       host: `http://${this.opts.IRIHostname}`,
