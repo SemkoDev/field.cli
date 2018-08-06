@@ -1,0 +1,11 @@
+.idea/
+.git/
+src/
+node_modules/
+temp/
+builds/
+config.ini
+*.iml
+*.log
+*.md
+
