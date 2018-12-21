@@ -263,13 +263,6 @@ pow = true
 
 ## Contributing
 
-### Donations
-
-**Donations always welcome**:
-
-IYUIUCFNGOEEQHT9CQU9VYJVOJMQI9VYTQGQLTBAKTFIPWWRBFEV9TJWUZU9EYEFPM9VB9QYXTSMCDKMDABASVXPPX```
-```
-
 ### Donate to the Nodes
 
 We are currently working to add automatic donations to participating nodes based on the work done.
