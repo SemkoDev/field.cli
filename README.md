@@ -1,6 +1,6 @@
-# DevIOTA Field
+# Field
 
-DevIOTA Field is a Proxy for your IRI, that sends regular statistics
+Field is a Proxy for your IRI, that sends regular statistics
 to the Field server (http://field.deviota.com) and accepts jobs from the
 server's load balancer (optional).
 
